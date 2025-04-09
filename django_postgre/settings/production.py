@@ -1,15 +1,13 @@
 from .base import *
+import dj_database_url
+from decouple import config
 
-DEBUG = False
+DEBUG = True
 ALLOWED_HOSTS = []
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config("DATABASE_NAME"),
-        'USER': config("DATABASE_USER"),
-        'PASSWORD': config("DATABASE_PASSWORD"),
-        'HOST': config("DATABASE_HOST"),
-        'PORT': '5432',
-    }
+    'default': dj_database_url.parse(
+        config("DATABASE_URL"),
+        conn_max_age=600,  # optionnel, pour les connexions persistantes
+    )
 }
